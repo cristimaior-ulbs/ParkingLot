@@ -3,7 +3,16 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
-    <persistence-unit name="default">
-        <!-- Configurațiile tale -->
+    <persistence-unit name="default" transaction-type="JTA">
+        <jta-data-source>jdbc/ParkingLotResource</jta-data-source>
+        <class>com.parking.parkinglot.entities.User</class>
+        <class>com.parking.parkinglot.entities.Car</class>
+        
+
+        <properties>
+            <!-- Nu imi apare value="create-or-extend-tables" /> -->
+           <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
+        </properties><!-- Configurațiile tale -->
     </persistence-unit>
+    
 </persistence>
