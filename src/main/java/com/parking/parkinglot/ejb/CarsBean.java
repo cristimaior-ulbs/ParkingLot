@@ -4,6 +4,7 @@ import com.parking.parkinglot.common.CarDto;
 import com.parking.parkinglot.entities.Car;
 import jakarta.ejb.EJBException;
 import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -18,6 +19,9 @@ public class CarsBean {
 
     @PersistenceContext
     EntityManager entityManager;
+
+    @Inject
+    CarsBean carsBean;
 
     public List<CarDto> copyCarsToDto(List<Car> cars) {
         List<CarDto> dtos = new ArrayList<>();
