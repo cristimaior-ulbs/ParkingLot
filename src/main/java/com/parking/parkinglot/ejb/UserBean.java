@@ -4,6 +4,7 @@ import com.parking.parkinglot.common.CarDto;
 import com.parking.parkinglot.common.UserDto;
 import com.parking.parkinglot.entities.Car;
 import com.parking.parkinglot.entities.User;
+import com.parking.parkinglot.entities.UserGroup;
 import jakarta.ejb.EJBException;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -25,6 +26,9 @@ public class UserBean {
     @Inject
     UserBean userBean;
 
+    @Inject
+    PasswordBean passwordBean;
+
     public List<UserDto> copyUsersToDto(List<User> users) {
         List<UserDto> dtos = new ArrayList<>();
         for (User user : users) {
@@ -45,6 +49,27 @@ public class UserBean {
             return copyUsersToDto(users);
         } catch (Exception ex) {
             throw new EJBException(ex);
+        }
+    }
+
+    public void createUser(String username, String email, String password, List<String> user_groups) {
+        LOG.info("createUser");
+
+        User user = new User();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(passwordBean.convertToSha256(password));
+        entityManager.persist(user);
+
+        assignGroupsToUser(username, user_groups);
+    }
+
+    public void assignGroupsToUser(String username, List<String> user_groups) {
+        for(String user_group : user_groups) {
+            UserGroup userGroup = new UserGroup();
+            userGroup.setUsername(username);
+            userGroup.setUserGroup(user_group);
+            entityManager.persist(userGroup);
         }
     }
 }

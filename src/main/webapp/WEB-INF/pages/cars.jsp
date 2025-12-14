@@ -9,13 +9,10 @@
     <form method="POST" action="${pageContext.request.contextPath}/DeleteCars">
         <!-- Action Buttons -->
         <div class="d-flex mb-4">
-            <a href="${pageContext.request.contextPath}/AddCar"
-               class="btn btn-primary btn-lg px-4 me-2">
-                Add Car
-            </a>
-            <button type="submit" class="btn btn-danger btn-lg px-4">
-                Delete Cars
-            </button>
+            <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
+                <a href="${pageContext.request.contextPath}/AddCar" class="btn btn-primary btn-ig">Add Car</a>
+                <button class="btn btn-danger" type="submit">Delete Cars</button>
+            </c:if>
         </div>
 
         <!-- Cars Table with Checkboxes -->
@@ -34,16 +31,17 @@
                 <c:forEach var="car" items="${cars}">
                     <tr>
                         <td>
-                            <input type="checkbox" name="car_ids" value="${car.id}">
+                            <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
+                                <input type="checkbox" name="car_ids" value="${car.id}" />
+                            </c:if>
                         </td>
                         <td>${car.licensePlate}</td>
                         <td>${car.parkingSpot}</td>
                         <td>${car.ownerName}</td>
                         <td>
-                            <a class="btn btn-secondary btn-sm"
-                               href="${pageContext.request.contextPath}/EditCar?id=${car.id}">
-                                Edit Car
-                            </a>
+                            <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
+                                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/EditCar?id=${car.id}">Edit Car</a>
+                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>
