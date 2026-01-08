@@ -13,6 +13,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -22,9 +23,6 @@ public class UserBean {
 
     @PersistenceContext
     EntityManager entityManager;
-
-    @Inject
-    UserBean userBean;
 
     @Inject
     PasswordBean passwordBean;
@@ -72,5 +70,13 @@ public class UserBean {
             userGroup.setUserGroup(user_group);
             entityManager.persist(userGroup);
         }
+    }
+
+    public Collection<String> findUsernameByUserIds(Collection<Long> userIds) {
+        List<String> usernames =
+                entityManager.createQuery("SELECT u.username FROM User u WHERE u.id IN :userIds", String.class)
+                        .setParameter("userIds", userIds)
+                        .getResultList();
+        return usernames;
     }
 }
