@@ -10,20 +10,21 @@
         <!-- Action Buttons -->
         <div class="d-flex mb-4">
             <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
-                <a href="${pageContext.request.contextPath}/AddCar" class="btn btn-primary btn-ig">Add Car</a>
+                <a href="${pageContext.request.contextPath}/AddCar" class="btn btn-primary btn-ig me-2">Add Car</a>
                 <button class="btn btn-danger" type="submit">Delete Cars</button>
             </c:if>
         </div>
 
         <!-- Cars Table with Checkboxes -->
         <div class="container text-center">
-            <table class="table">
+            <table class="table table-striped">
                 <thead>
                 <tr>
                     <th scope="col">Select</th>
                     <th scope="col">License Plate</th>
                     <th scope="col">Parking Spot</th>
                     <th scope="col">Owner</th>
+                    <th scope="col">Photo</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -39,8 +40,22 @@
                         <td>${car.parkingSpot}</td>
                         <td>${car.ownerName}</td>
                         <td>
+                            <img src="${pageContext.request.contextPath}/CarPhotos?id=${car.id}"
+                                 width="48" height="48" class="rounded"
+                                 onerror="this.src='${pageContext.request.contextPath}/images/default-car.png'" />
+                        </td>
+                        <td>
                             <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
-                                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/EditCar?id=${car.id}">Edit Car</a>
+                                <div class="btn-group" role="group">
+                                    <a class="btn btn-sm btn-outline-secondary"
+                                       href="${pageContext.request.contextPath}/AddCarPhoto?id=${car.id}">
+                                        Add Photo
+                                    </a>
+                                    <a class="btn btn-sm btn-outline-secondary"
+                                       href="${pageContext.request.contextPath}/EditCar?id=${car.id}">
+                                        Edit Car
+                                    </a>
+                                </div>
                             </c:if>
                         </td>
                     </tr>
@@ -49,7 +64,7 @@
             </table>
         </div>
 
-        <h5>Free parking spots: ${numberOfFreeParkingSpots}</h5>
+        <h5 class="mt-3">Free parking spots: ${numberOfFreeParkingSpots}</h5>
     </form>
 
 </t:pageTemplate>

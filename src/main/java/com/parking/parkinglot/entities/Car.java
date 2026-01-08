@@ -20,6 +20,17 @@ public class Car {
     @Column(name = "parking_spot", nullable = false)
     private String parkingSpot;
 
+    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private CarPhoto photo;
+
+    public CarPhoto getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(CarPhoto photo) {
+        this.photo = photo;
+    }
+
     public void setParkingSpot(String parkingSpot) {
         this.parkingSpot = parkingSpot;
     }
