@@ -1,6 +1,7 @@
 package com.parking.parkinglot.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,8 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Size(min = 3, max = 100)
+    @Column(unique = true, nullable = false, length = 100)
     public String getEmail() {
         return email;
     }
