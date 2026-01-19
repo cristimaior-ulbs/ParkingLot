@@ -150,7 +150,6 @@ public class CarsBean {
     public CarPhotoDto findPhotoByCarId(Integer carId) {
         List<CarPhoto> photos = entityManager
                 .createQuery("SELECT p FROM CarPhoto p where p.car.id = :id", CarPhoto.class)
-                .setParameter("id", carId)
                 .getResultList();
         if (photos.isEmpty()) {
             return null;

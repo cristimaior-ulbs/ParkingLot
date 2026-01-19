@@ -28,7 +28,7 @@ public class UserBean {
     PasswordBean passwordBean;
 
     public List<UserDto> copyUsersToDto(List<User> users) {
-        List<UserDto> dtos = new ArrayList<>();
+        List<UserDto> dtos = new ArrayList<>()  ;
         for (User user : users) {
             UserDto userDto = new UserDto(
                     user.getId(),
